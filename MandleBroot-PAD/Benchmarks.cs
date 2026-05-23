@@ -29,8 +29,8 @@ public class Benchmarks
         Mandelbrot.RunParallelFor("Parallel.pgm", ImageSize);
     
     [Benchmark]
-    public void MetodoParallelLowLevel() =>
-        Mandelbrot.RunParallelForLowLevel("ParallelLowLevel.pgm", ImageSize);
+    public void MetodoParallelPrimitives() =>
+        Mandelbrot.RunParallelForPrimitives("ParallelPrimitives.pgm", ImageSize);
     
     
     [Benchmark]

@@ -229,7 +229,7 @@ public sealed class Mandelbrot
         WriteFile(fileName, size, img);
     }
     
-    public static void RunParallelForLowLevel(string fileName, (int width, int height) size)
+    public static void RunParallelForPrimitives(string fileName, (int width, int height) size)
     {
         const double aspectRatio = 1.0; // https://en.wikipedia.org/wiki/Aspect_ratio_(image)
         // integer coordinate ( pixel or screen or image coordinate)
@@ -376,13 +376,14 @@ public sealed class Mandelbrot
                         break;
                     }
                     
+                    // Branchless increment: subtracting -1 adds 1. Subtracting 0 does nothing.
                     iterations = iterations - mask;
                     
                     ziVector = (doubleValueVector256 * zrVector * ziVector) + ciVector;
                     zrVector = zr2 - zi2 + crVector;
                 }
 
-                img[j * size.width + i]     = iterations[0] == kMax ? (byte)0 : (byte)255;
+                img[j * size.width + i] = iterations[0] == kMax ? (byte)0 : (byte)255;
                 img[j * size.width + i + 1] = iterations[1] == kMax ? (byte)0 : (byte)255;
                 img[j * size.width + i + 2] = iterations[2] == kMax ? (byte)0 : (byte)255;
                 img[j * size.width + i + 3] = iterations[3] == kMax ? (byte)0 : (byte)255;
