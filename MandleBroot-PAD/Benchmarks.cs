@@ -32,4 +32,9 @@ public class Benchmarks
     public void MetodoParallelLowLevel() =>
         Mandelbrot.RunParallelForLowLevel("ParallelLowLevel.pgm", ImageSize);
     
+    
+    [Benchmark]
+    public void MetodoParallelLowLevelAVX2() =>
+        Mandelbrot.RunParallelForLowLevelAVX2("ParallelLowLevelAVX2.pgm", ImageSize);
+    
 }
