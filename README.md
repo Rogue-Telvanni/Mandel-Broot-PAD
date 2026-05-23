@@ -12,7 +12,7 @@ AMD Ryzen 5 3600 1.72GHz, 1 CPU, 12 logical and 6 physical cores
 | MetodoThreadsSimples          | (1200, 1200) | 194.22 ms | 0.542 ms | 0.507 ms |
 | MetodoThreadsSimplesOtimizado | (1200, 1200) |  61.79 ms | 0.932 ms | 0.826 ms |
 | MetodoParallel                | (1200, 1200) |  66.89 ms | 1.331 ms | 1.866 ms |
-| MetodoParallelLowLevel        | (1200, 1200) |  39.99 ms | 0.699 ms | 0.620 ms |
+| MetodoParallelPrimitives       | (1200, 1200) |  39.99 ms | 0.699 ms | 0.620 ms |
 | MetodoParallelLowLevelAVX2    | (1200, 1200) |  12.03 ms | 0.094 ms | 0.083 ms |
 
 // * Hints *
