@@ -1,9 +1,8 @@
-﻿using MandleBroot_PAD;
+﻿using BenchmarkDotNet.Running;
+using MandleBroot_PAD;
 
-Console.WriteLine("Hello, World!");
+// var size = (1200, 1200);
+// Mandelbrot.RunThreadsSimplesOtimizado("treadOtimizada.pgm", size);
 
-var mandel = new Mandelbrot();
-mandel.Run("Teste.pgm");
 
-Console.WriteLine("Finalizado");
-Console.ReadLine();
+var summary = BenchmarkRunner.Run(typeof(Program).Assembly);
