@@ -271,7 +271,7 @@ public sealed class Mandelbrot
                     
                     /*
                      * Z^2 um numero complexo ao quadrado é similar a
-                     * Z^2 = (z_r + z_i i) \times (z_r + z_i i)
+                     * Z^2 = (z_r + z_i i) * (z_r + z_i i)
                      * Z^2 = z_r^2 + z_r z_i i + z_r z_i i + z_i^2 i^2
                      * ONDE z_r^2 - z_i^2 é a parte real e 2 z_r z_i é a parte imaginaria
                      * removemos a struct e chamadas e overloads de metodos do Complex e usamos objetos com menos
@@ -340,24 +340,13 @@ public sealed class Mandelbrot
                 );
                 
                 Vector256<double> ciVector = Vector256.Create(y);
-                
                 Vector256<double> zrVector = Vector256<double>.Zero;
                 Vector256<double> ziVector = Vector256<double>.Zero;
-                
-                
                 Vector256<long> iterations = Vector256<long>.Zero;
                 
                 int k; // number of iterations
                 for (k = 0; k < kMax; ++k)
                 {
-                    /*
-                     * Z^2 um numero complexo ao quadrado é similar a
-                     * Z^2 = (z_r + z_i i) \times (z_r + z_i i)
-                     * Z^2 = z_r^2 + z_r z_i i + z_r z_i i + z_i^2 i^2
-                     * ONDE z_r^2 - z_i^2 é a parte real e 2 z_r z_i é a parte imaginaria
-                     * removemos a struct e chamadas e overloads de metodos do Complex e usamos objetos com menos
-                     * overhead de performance.
-                     */
                     Vector256<double> zr2 = zrVector * zrVector;
                     Vector256<double> zi2 = ziVector * ziVector;
                     
@@ -366,11 +355,10 @@ public sealed class Mandelbrot
                     // Compare magnitude squared against the limit.
                     // True = pixel is still inside. False = pixel escaped.
                     Vector256<double> maskDouble = Vector256.LessThanOrEqual(radius, maxRadiusVector);
-                    // Reinterpret the mask as 64-bit integers.
                     // Active lanes become -1. Escaped lanes become 0.
                     Vector256<long> mask = maskDouble.AsInt64();
 
-                    // If all 4 lanes have escaped (the mask is entirely zeros), we can break early!
+                    // If all 4 lanes have escaped (the mask is all zeros)
                     if (mask == Vector256<long>.Zero)
                     {
                         break;
