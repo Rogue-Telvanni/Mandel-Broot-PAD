@@ -56,7 +56,7 @@ public sealed class Mandelbrot
         WriteFile(fileName, size, img);
     }
 
-    public static void RunThreadsSimples(string fileName, (int width, int height) size)
+    public static void RunThreadsSimples(string fileName, (int width, int height) size, int numberOfThreds)
     {
         const double aspectRatio = 1.0; // https://en.wikipedia.org/wiki/Aspect_ratio_(image)
         // integer coordinate ( pixel or screen or image coordinate)
@@ -77,7 +77,7 @@ public sealed class Mandelbrot
         const double escapeRadiusEnd = escapeRadius * escapeRadius;
   
         var img = new byte[size.width * size.height]; // image = dynamic array of colors
-        var tasks = new Task[12]; // numero de processadores fisicos Ryzen 3600
+        var tasks = new Task[numberOfThreds]; // numero de processadores fisicos Ryzen 3600
         
         // subdivide o problema em tasks.size pedaços de forma mais simples e ineficiente para testes
         // dividindo o problema em tasks.size blocos e na altura
@@ -113,7 +113,7 @@ public sealed class Mandelbrot
         WriteFile(fileName, size, img);
     }
 
-    public static void RunThreadsSimplesOtimizado(string fileName, (int width, int height) size)
+    public static void RunThreadsSimplesOtimizado(string fileName, (int width, int height) size, int numberOfThreds)
     {
         const double aspectRatio = 1.0; // https://en.wikipedia.org/wiki/Aspect_ratio_(image)
         // integer coordinate ( pixel or screen or image coordinate)
@@ -134,7 +134,7 @@ public sealed class Mandelbrot
         const double escapeRadiusEnd = escapeRadius * escapeRadius;
 
         var img = new byte[size.width * size.height]; // image = dynamic array of colors
-        var tasks = new Task[12]; // numero de processadores fisicos 6 virtuais sao 12  Ryzen 3600
+        var tasks = new Task[numberOfThreds]; // numero de processadores fisicos 6 virtuais sao 12  Ryzen 3600
 
         // subdivide o problema em tasks.size pedaços de forma mais simples e ineficiente para testes
         // dividindo o problema em tasks.size blocos e na altura
@@ -173,7 +173,7 @@ public sealed class Mandelbrot
         WriteFile(fileName, size, img);
     }
     
-    public static void RunParallelFor(string fileName, (int width, int height) size)
+    public static void RunParallelFor(string fileName, (int width, int height) size, int numberOfThreds)
     {
         const double aspectRatio = 1.0; // https://en.wikipedia.org/wiki/Aspect_ratio_(image)
         // integer coordinate ( pixel or screen or image coordinate)
@@ -202,7 +202,12 @@ public sealed class Mandelbrot
          * várias threads diminuindo assim o custo de uma unica thread no multi thread simples melhorando o desempenho
          * de forma significativa
         */
-        Parallel.For(0, size.height, (int j) =>
+        var options = new ParallelOptions 
+        { 
+            MaxDegreeOfParallelism = numberOfThreds 
+        };
+        
+        Parallel.For(0, size.height, options, (int j) =>
         {
             //double y = (size.height/2 - (j + 0.5)) / (size.height/2) * plane_radius;
             double y = cyMin + j * pixelHeight; /* mapping from screen to world; reverse Y  axis */

@@ -6,7 +6,9 @@ public class Benchmarks
 {
     [ParamsSource(nameof(Sizes))]
     public (int width, int height) ImageSize {  get; set; }
-    
+
+    public IEnumerable<int> threadNumber => [2, 4, 6, 8, 10, 12];
+
     public static IEnumerable<(int width, int height)> Sizes =>
     [
         (1200, 1200)
@@ -17,16 +19,19 @@ public class Benchmarks
         Mandelbrot.Run("Padrao.pgm", ImageSize);
     
     [Benchmark]
-    public void MetodoThreadsSimples() =>
-        Mandelbrot.RunThreadsSimples("Thread.pgm", ImageSize);
+    [ArgumentsSource(nameof(threadNumber))]
+    public void MetodoThreadsSimples(int threadSize) =>
+        Mandelbrot.RunThreadsSimples("Thread.pgm", ImageSize, threadSize);
     
     [Benchmark]
-    public void MetodoThreadsSimplesOtimizado() => 
-        Mandelbrot.RunThreadsSimplesOtimizado("ThreadOtimizado.pgm", ImageSize);
+    [ArgumentsSource(nameof(threadNumber))]
+    public void MetodoThreadsSimplesOtimizado(int threadSize) => 
+        Mandelbrot.RunThreadsSimplesOtimizado("ThreadOtimizado.pgm", ImageSize, threadSize);
     
     [Benchmark]
-    public void MetodoParallel() =>
-        Mandelbrot.RunParallelFor("Parallel.pgm", ImageSize);
+    [ArgumentsSource(nameof(threadNumber))]
+    public void MetodoParallel(int threadSize) =>
+        Mandelbrot.RunParallelFor("Parallel.pgm", ImageSize, threadSize);
     
     [Benchmark]
     public void MetodoParallelPrimitives() =>
