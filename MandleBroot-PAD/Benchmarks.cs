@@ -2,12 +2,13 @@ using BenchmarkDotNet.Attributes;
 
 namespace MandleBroot_PAD;
 
+[MemoryDiagnoser]
 public class Benchmarks
 {
     [ParamsSource(nameof(Sizes))]
     public (int width, int height) ImageSize {  get; set; }
 
-    public IEnumerable<int> threadNumber => [2, 4, 6, 8, 10, 12];
+    public IEnumerable<int> threadNumber => [2, 4, 6, 8, 10, 12, 14, 16, 18];
 
     public static IEnumerable<(int width, int height)> Sizes =>
     [
