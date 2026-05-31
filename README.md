@@ -8,28 +8,38 @@ AMD Ryzen 5 3600 1.72GHz, 1 CPU, 12 logical and 6 physical cores
 
 | Method                        | ImageSize    | threadSize | Mean      | Error    | StdDev   | Gen0     | Gen1     | Gen2     | Allocated |
 |------------------------------ |------------- |----------- |----------:|---------:|---------:|---------:|---------:|---------:|----------:|
-| MetodoThreadsSimples          | (1200, 1200) | 2          | 315.89 ms | 1.463 ms | 1.369 ms |        - |        - |        - |   1.38 MB |
-| MetodoThreadsSimplesOtimizado | (1200, 1200) | 2          | 315.32 ms | 1.586 ms | 1.483 ms |        - |        - |        - |   1.38 MB |
-| MetodoParallel                | (1200, 1200) | 2          | 315.34 ms | 1.983 ms | 1.855 ms |        - |        - |        - |   1.38 MB |
-| MetodoThreadsSimples          | (1200, 1200) | 4          | 314.87 ms | 1.924 ms | 1.706 ms |        - |        - |        - |   1.38 MB |
-| MetodoThreadsSimplesOtimizado | (1200, 1200) | 4          | 159.63 ms | 0.561 ms | 0.468 ms | 250.0000 | 250.0000 | 250.0000 |   1.38 MB |
-| MetodoParallel                | (1200, 1200) | 4          | 161.18 ms | 0.752 ms | 0.667 ms | 250.0000 | 250.0000 | 250.0000 |   1.39 MB |
-| MetodoThreadsSimples          | (1200, 1200) | 6          | 300.00 ms | 1.203 ms | 1.066 ms |        - |        - |        - |   1.38 MB |
-| MetodoThreadsSimplesOtimizado | (1200, 1200) | 6          | 108.18 ms | 0.574 ms | 0.480 ms | 200.0000 | 200.0000 | 200.0000 |   1.38 MB |
-| MetodoParallel                | (1200, 1200) | 6          | 112.54 ms | 0.438 ms | 0.388 ms | 200.0000 | 200.0000 | 200.0000 |   1.39 MB |
-| MetodoThreadsSimples          | (1200, 1200) | 8          | 260.60 ms | 1.443 ms | 1.349 ms |        - |        - |        - |   1.38 MB |
-| MetodoThreadsSimplesOtimizado | (1200, 1200) | 8          |  85.93 ms | 0.287 ms | 0.269 ms | 166.6667 | 166.6667 | 166.6667 |   1.38 MB |
-| MetodoParallel                | (1200, 1200) | 8          |  88.19 ms | 1.564 ms | 1.306 ms | 200.0000 | 200.0000 | 200.0000 |   1.39 MB |
-| MetodoThreadsSimples          | (1200, 1200) | 10         | 223.98 ms | 0.729 ms | 0.646 ms |        - |        - |        - |   1.38 MB |
-| MetodoThreadsSimplesOtimizado | (1200, 1200) | 10         |  71.74 ms | 1.119 ms | 2.129 ms | 250.0000 | 250.0000 | 250.0000 |   1.38 MB |
-| MetodoParallel                | (1200, 1200) | 10         |  72.69 ms | 0.593 ms | 0.526 ms | 142.8571 | 142.8571 | 142.8571 |   1.39 MB |
-| MetodoThreadsSimples          | (1200, 1200) | 12         | 196.24 ms | 0.591 ms | 0.553 ms |        - |        - |        - |   1.38 MB |
-| MetodoThreadsSimplesOtimizado | (1200, 1200) | 12         |  67.63 ms | 1.351 ms | 2.063 ms | 250.0000 | 250.0000 | 250.0000 |   1.38 MB |
-| MetodoParallel                | (1200, 1200) | 12         |  66.68 ms | 0.901 ms | 0.704 ms | 250.0000 | 250.0000 | 250.0000 |    1.4 MB |
-| MetodoPadrao                  | (1200, 1200) | ?          | 626.73 ms | 4.610 ms | 4.312 ms |        - |        - |        - |   1.38 MB |
-| MetodoParallelPrimitives      | (1200, 1200) | ?          |  41.73 ms | 0.811 ms | 1.189 ms | 230.7692 | 230.7692 | 230.7692 |    1.4 MB |
-| MetodoParallelLowLevelAVX2    | (1200, 1200) | ?          |  12.75 ms | 0.223 ms | 0.186 ms | 250.0000 | 250.0000 | 250.0000 |    1.4 MB |
-| MetodoPadraoAVX2              | (1200, 1200) | ?          |  92.37 ms | 0.465 ms | 0.435 ms | 166.6667 | 166.6667 | 166.6667 |   1.38 MB |
+| MetodoThreadsSimples          | (1200, 1200) | 2          | 315.11 ms | 1.669 ms | 1.561 ms |        - |        - |        - |   1.38 MB |
+| MetodoThreadsSimplesOtimizado | (1200, 1200) | 2          | 315.98 ms | 1.216 ms | 1.138 ms |        - |        - |        - |   1.38 MB |
+| MetodoParallel                | (1200, 1200) | 2          | 313.63 ms | 0.963 ms | 0.853 ms |        - |        - |        - |   1.38 MB |
+| MetodoThreadsSimples          | (1200, 1200) | 4          | 314.02 ms | 1.591 ms | 1.489 ms |        - |        - |        - |   1.38 MB |
+| MetodoThreadsSimplesOtimizado | (1200, 1200) | 4          | 159.96 ms | 0.873 ms | 0.817 ms | 250.0000 | 250.0000 | 250.0000 |   1.38 MB |
+| MetodoParallel                | (1200, 1200) | 4          | 160.98 ms | 0.763 ms | 0.713 ms | 250.0000 | 250.0000 | 250.0000 |   1.39 MB |
+| MetodoThreadsSimples          | (1200, 1200) | 6          | 300.87 ms | 1.253 ms | 1.111 ms |        - |        - |        - |   1.38 MB |
+| MetodoThreadsSimplesOtimizado | (1200, 1200) | 6          | 108.56 ms | 0.465 ms | 0.412 ms | 200.0000 | 200.0000 | 200.0000 |   1.38 MB |
+| MetodoParallel                | (1200, 1200) | 6          | 112.88 ms | 0.754 ms | 0.705 ms | 200.0000 | 200.0000 | 200.0000 |   1.39 MB |
+| MetodoThreadsSimples          | (1200, 1200) | 8          | 260.56 ms | 1.381 ms | 1.292 ms |        - |        - |        - |   1.38 MB |
+| MetodoThreadsSimplesOtimizado | (1200, 1200) | 8          |  86.11 ms | 1.122 ms | 0.937 ms | 166.6667 | 166.6667 | 166.6667 |   1.38 MB |
+| MetodoParallel                | (1200, 1200) | 8          |  88.00 ms | 0.918 ms | 0.858 ms | 166.6667 | 166.6667 | 166.6667 |   1.39 MB |
+| MetodoThreadsSimples          | (1200, 1200) | 10         | 222.71 ms | 0.581 ms | 0.515 ms |        - |        - |        - |   1.38 MB |
+| MetodoThreadsSimplesOtimizado | (1200, 1200) | 10         |  70.24 ms | 0.466 ms | 0.413 ms | 250.0000 | 250.0000 | 250.0000 |   1.38 MB |
+| MetodoParallel                | (1200, 1200) | 10         |  72.42 ms | 0.241 ms | 0.226 ms | 142.8571 | 142.8571 | 142.8571 |   1.39 MB |
+| MetodoThreadsSimples          | (1200, 1200) | 12         | 195.29 ms | 0.867 ms | 0.811 ms |        - |        - |        - |   1.38 MB |
+| MetodoThreadsSimplesOtimizado | (1200, 1200) | 12         |  73.48 ms | 2.567 ms | 7.569 ms | 250.0000 | 250.0000 | 250.0000 |   1.38 MB |
+| MetodoParallel                | (1200, 1200) | 12         |  68.45 ms | 1.356 ms | 3.061 ms | 250.0000 | 250.0000 | 250.0000 |    1.4 MB |
+| MetodoThreadsSimples          | (1200, 1200) | 14         | 178.18 ms | 1.135 ms | 1.062 ms |        - |        - |        - |   1.38 MB |
+| MetodoThreadsSimplesOtimizado | (1200, 1200) | 14         |  78.77 ms | 1.571 ms | 2.445 ms | 166.6667 | 166.6667 | 166.6667 |   1.38 MB |
+| MetodoParallel                | (1200, 1200) | 14         |  69.79 ms | 1.393 ms | 2.440 ms | 250.0000 | 250.0000 | 250.0000 |    1.4 MB |
+| MetodoThreadsSimples          | (1200, 1200) | 16         | 159.53 ms | 0.957 ms | 0.895 ms | 250.0000 | 250.0000 | 250.0000 |   1.38 MB |
+| MetodoThreadsSimplesOtimizado | (1200, 1200) | 16         |  84.18 ms | 0.535 ms | 0.474 ms | 166.6667 | 166.6667 | 166.6667 |   1.38 MB |
+| MetodoParallel                | (1200, 1200) | 16         |  73.71 ms | 1.445 ms | 2.334 ms | 250.0000 | 250.0000 | 250.0000 |    1.4 MB |
+| MetodoThreadsSimples          | (1200, 1200) | 18         | 145.97 ms | 1.814 ms | 1.697 ms | 250.0000 | 250.0000 | 250.0000 |   1.38 MB |
+| MetodoThreadsSimplesOtimizado | (1200, 1200) | 18         |  76.61 ms | 0.754 ms | 0.705 ms | 142.8571 | 142.8571 | 142.8571 |   1.38 MB |
+| MetodoParallel                | (1200, 1200) | 18         |  74.24 ms | 1.475 ms | 2.208 ms | 250.0000 | 250.0000 | 250.0000 |    1.4 MB |
+| MetodoPadrao                  | (1200, 1200) | ?          | 626.68 ms | 4.705 ms | 4.401 ms |        - |        - |        - |   1.38 MB |
+| MetodoParallelPrimitives      | (1200, 1200) | ?          |  40.48 ms | 0.536 ms | 0.448 ms | 230.7692 | 230.7692 | 230.7692 |    1.4 MB |
+| MetodoParallelLowLevelAVX2    | (1200, 1200) | ?          |  12.38 ms | 0.144 ms | 0.128 ms | 250.0000 | 250.0000 | 250.0000 |    1.4 MB |
+| MetodoPadraoAVX2              | (1200, 1200) | ?          |  92.37 ms | 0.345 ms | 0.306 ms | 166.6667 | 166.6667 | 166.6667 |   1.38 MB |
+
 
 
 // * Hints *
