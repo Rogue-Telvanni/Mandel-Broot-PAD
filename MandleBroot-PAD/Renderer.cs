@@ -76,7 +76,7 @@ namespace MandleBroot_PAD
                 }
 
                 Raylib.BeginDrawing();
-                Raylib.ClearBackground(Color.Purple); // Limpa o fundo
+                Raylib.ClearBackground(Color.Purple);
 
                 Raylib.DrawTexture(texture, 0, 0, Color.White);
 
@@ -134,9 +134,8 @@ namespace MandleBroot_PAD
 
         private void RenderBaseLine((int width, int height) size, CancellationToken token)
         {
-            const double aspectRatio = 1.0; // https://en.wikipedia.org/wiki/Aspect_ratio_(image)
-                                            // integer coordinate ( pixel or screen or image coordinate)
-                                            // double coordinate ( real world)
+            const double aspectRatio = 1.0; 
+                                            
             const double planeRadius = 2;
             Complex planeCenter = new(-0.5, 0.0);
 
@@ -158,19 +157,17 @@ namespace MandleBroot_PAD
                 if (token.IsCancellationRequested)
                     return;
 
-                //double y = (size.height/2 - (j + 0.5)) / (size.height/2) * plane_radius;
-                double y = cyMin + j * pixelHeight; /* mapping from screen to world; reverse Y  axis */
+                double y = cyMin + j * pixelHeight; 
                 for (int i = 0; i < size.width; ++i)
                 {
-                    // double x = plane_center + (i + 0.5 - size.width/2) / (size.height/2) * plane_radius;
                     double x = cxMin + i * pixelWidth;
-                    Complex c = new(x, y); // parameter c of  fc(z) = z^2 + c
-                    Complex z = 0; // z = z0 = critical point 
-                    int k; // number of iterations
+                    Complex c = new(x, y); 
+                    Complex z = 0; 
+                    int k; 
                     for (k = 0; k < kMax; ++k)
                     {
-                        z = z * z + c; // forward iteration of complex quadratic polynomial
-                        if (NormComplex(z) > escapeRadiusEnd) // if abs(z) > ER
+                        z = z * z + c; 
+                        if (NormComplex(z) > escapeRadiusEnd) 
                         { break; }
                     }
                     
@@ -186,9 +183,8 @@ namespace MandleBroot_PAD
 
         public void RunThreadsSimples((int width, int height) size, int numberOfThreds, CancellationToken token)
         {
-            const double aspectRatio = 1.0; // https://en.wikipedia.org/wiki/Aspect_ratio_(image)
-                                            // integer coordinate ( pixel or screen or image coordinate)
-                                            // double coordinate ( real world)
+            const double aspectRatio = 1.0;
+
             const double planeRadius = 2;
             Complex planeCenter = new(-0.5, 0.0);
 
@@ -200,14 +196,12 @@ namespace MandleBroot_PAD
             double pixelHeight = (cyMax - cyMin) / size.height;
 
 
-            const int kMax = 1024; // maximal number of iterations
+            const int kMax = 1024; 
             const double escapeRadius = 2;
             const double escapeRadiusEnd = escapeRadius * escapeRadius;
 
-            var tasks = new Task[numberOfThreds]; // numero de processadores fisicos Ryzen 3600
+            var tasks = new Task[numberOfThreds];
 
-            // subdivide o problema em tasks.size pedaços de forma mais simples e ineficiente para testes
-            // dividindo o problema em tasks.size blocos e na altura
             int offset = size.height / tasks.Length;
             for (int part = 0; part < tasks.Length; part++)
             {
@@ -217,17 +211,17 @@ namespace MandleBroot_PAD
                     int limit = (part1 + 1) * offset;
                     for (int j = part1 * offset; j < limit; ++j)
                     {
-                        double y = cyMin + j * pixelHeight; /* mapping from screen to world; reverse Y  axis */
+                        double y = cyMin + j * pixelHeight; 
                         for (int i = 0; i < size.width; ++i)
                         {
                             double x = cxMin + i * pixelWidth;
-                            Complex c = new(x, y); // parameter c of  fc(z) = z^2 + c
-                            Complex z = 0; // z = z0 = critical point 
-                            int k; // number of iterations
+                            Complex c = new(x, y); 
+                            Complex z = 0;
+                            int k;
                             for (k = 0; k < kMax; ++k)
                             {
-                                z = z * z + c; // forward iteration of complex quadratic polynomial
-                                if (NormComplex(z) > escapeRadiusEnd) // if abs(z) > ER
+                                z = z * z + c; 
+                                if (NormComplex(z) > escapeRadiusEnd)
                                 { break; }
                             }
 
@@ -244,9 +238,8 @@ namespace MandleBroot_PAD
 
         public void RunThreadsSimplesOtimizado((int width, int height) size, int numberOfThreds, CancellationToken token)
         {
-            const double aspectRatio = 1.0; // https://en.wikipedia.org/wiki/Aspect_ratio_(image)
-                                            // integer coordinate ( pixel or screen or image coordinate)
-                                            // double coordinate ( real world)
+            const double aspectRatio = 1.0;
+
             const double planeRadius = 2;
             Complex planeCenter = new(-0.5, 0.0);
 
@@ -258,14 +251,12 @@ namespace MandleBroot_PAD
             double pixelHeight = (cyMax - cyMin) / size.height;
 
 
-            const int kMax = 1024; // maximal number of iterations
+            const int kMax = 1024; 
             const double escapeRadius = 2;
             const double escapeRadiusEnd = escapeRadius * escapeRadius;
 
-            var tasks = new Task[numberOfThreds]; // numero de processadores fisicos 6 virtuais sao 12  Ryzen 3600
+            var tasks = new Task[numberOfThreds];
 
-            // subdivide o problema em tasks.size pedaços de forma mais simples e ineficiente para testes
-            // dividindo o problema em tasks.size blocos e na altura
             int offset = size.height / tasks.Length;
             for (int part = 0; part < tasks.Length; part++)
             {
@@ -275,17 +266,17 @@ namespace MandleBroot_PAD
                     for (int j = 0; j < offset; ++j)
                     {
                         int line = part1 + tasks.Length * j;
-                        double y = cyMin + line * pixelHeight; /* mapping from screen to world; reverse Y  axis */
+                        double y = cyMin + line * pixelHeight;
                         for (int i = 0; i < size.width; ++i)
                         {
                             double x = cxMin + i * pixelWidth;
-                            Complex c = new(x, y); // parameter c of  fc(z) = z^2 + c
-                            Complex z = 0; // z = z0 = critical point 
-                            int k; // number of iterations
+                            Complex c = new(x, y); 
+                            Complex z = 0; 
+                            int k;
                             for (k = 0; k < kMax; ++k)
                             {
-                                z = z * z + c; // forward iteration of complex quadratic polynomial
-                                if (NormComplex(z) > escapeRadiusEnd) // if abs(z) > ER
+                                z = z * z + c; 
+                                if (NormComplex(z) > escapeRadiusEnd)
                                 {
                                     break;
                                 }
@@ -304,9 +295,8 @@ namespace MandleBroot_PAD
 
         public void RunParallelFor((int width, int height) size, int numberOfThreds, CancellationToken token)
         {
-            const double aspectRatio = 1.0; // https://en.wikipedia.org/wiki/Aspect_ratio_(image)
-                                            // integer coordinate ( pixel or screen or image coordinate)
-                                            // double coordinate ( real world)
+            const double aspectRatio = 1.0;
+
             const double planeRadius = 2;
             Complex planeCenter = new(-0.5, 0.0);
 
@@ -337,19 +327,17 @@ namespace MandleBroot_PAD
 
             Parallel.For(0, size.height, options, (int j) =>
             {
-                //double y = (size.height/2 - (j + 0.5)) / (size.height/2) * plane_radius;
-                double y = cyMin + j * pixelHeight; /* mapping from screen to world; reverse Y  axis */
+                double y = cyMin + j * pixelHeight; 
                 for (int i = 0; i < size.width; ++i)
                 {
-                    // double x = plane_center + (i + 0.5 - size.width/2) / (size.height/2) * plane_radius;
                     double x = cxMin + i * pixelWidth;
-                    Complex c = new(x, y); // parameter c of  fc(z) = z^2 + c
-                    Complex z = 0; // z = z0 = critical point 
-                    int k; // number of iterations
+                    Complex c = new(x, y);
+                    Complex z = 0;
+                    int k;
                     for (k = 0; k < kMax; ++k)
                     {
-                        z = z * z + c; // forward iteration of complex quadratic polynomial
-                        if (NormComplex(z) > escapeRadiusEnd) // if abs(z) > ER
+                        z = z * z + c;
+                        if (NormComplex(z) > escapeRadiusEnd) 
                         {
                             break;
                         }
@@ -365,9 +353,8 @@ namespace MandleBroot_PAD
 
         public void RunParallelForPrimitives((int width, int height) size, CancellationToken token)
         {
-            const double aspectRatio = 1.0; // https://en.wikipedia.org/wiki/Aspect_ratio_(image)
-                                            // integer coordinate ( pixel or screen or image coordinate)
-                                            // double coordinate ( real world)
+            const double aspectRatio = 1.0;
+
             const double planeRadius = 2;
             Complex planeCenter = new(-0.5, 0.0);
 
@@ -379,25 +366,22 @@ namespace MandleBroot_PAD
             double pixelHeight = (cyMax - cyMin) / size.height;
 
 
-            const int kMax = 1024; // maximal number of iterations
+            const int kMax = 1024;
             const double escapeRadius = 2;
             const double escapeRadiusEnd = escapeRadius * escapeRadius;
 
             Parallel.For(0, size.height, (int j) =>
             {
-                //double y = (size.height/2 - (j + 0.5)) / (size.height/2) * plane_radius;
-                double y = cyMin + j * pixelHeight; /* mapping from screen to world; reverse Y  axis */
+                double y = cyMin + j * pixelHeight;
                 for (int i = 0; i < size.width; ++i)
                 {
-                    // double x = plane_center + (i + 0.5 - size.width/2) / (size.height/2) * plane_radius;
                     double x = cxMin + i * pixelWidth;
 
-                    // parameter c of  fc(z) = z^2 + c
                     double cr = x;
                     double ci = y;
 
                     double zr = 0, zi = 0;
-                    int k; // number of iterations
+                    int k; 
                     for (k = 0; k < kMax; ++k)
                     {
 
@@ -413,8 +397,7 @@ namespace MandleBroot_PAD
                         double zr2 = zr * zr;
                         double zi2 = zi * zi;
 
-                        //z = z * z + c; // forward iteration of complex quadratic polynomial
-                        if (zr2 + zi2 > escapeRadiusEnd) // if abs(z) > ER
+                        if (zr2 + zi2 > escapeRadiusEnd)
                         {
                             break;
                         }
@@ -433,9 +416,8 @@ namespace MandleBroot_PAD
 
         public void RunParallelForLowLevelAVX2((int width, int height) size, CancellationToken token)
         {
-            const double aspectRatio = 1.0; // https://en.wikipedia.org/wiki/Aspect_ratio_(image)
-                                            // integer coordinate ( pixel or screen or image coordinate)
-                                            // double coordinate ( real world)
+            const double aspectRatio = 1.0;
+
             const double planeRadius = 2;
             Complex planeCenter = new(-0.5, 0.0);
 
@@ -447,7 +429,7 @@ namespace MandleBroot_PAD
             double pixelHeight = (cyMax - cyMin) / size.height;
 
 
-            const int kMax = 1024; // maximal number of iterations
+            const int kMax = 1024;
             const double escapeRadius = 2;
             const double escapeRadiusEnd = escapeRadius * escapeRadius;
 
@@ -459,16 +441,13 @@ namespace MandleBroot_PAD
 
             Parallel.For(0, size.height, options, (int j) =>
             {
-                //double y = (size.height/2 - (j + 0.5)) / (size.height/2) * plane_radius;
                 Vector256<double> maxRadiusVector = Vector256.Create(escapeRadiusEnd);
                 Vector256<double> doubleValueVector256 = Vector256.Create(2.0);
 
-                double y = cyMin + j * pixelHeight; /* mapping from screen to world; reverse Y  axis */
+                double y = cyMin + j * pixelHeight;
                 int simdLimit = size.width - (size.width % 4);
                 for (int i = 0; i < simdLimit; i += 4)
                 {
-                    // double x = plane_center + (i + 0.5 - size.width/2) / (size.height/2) * plane_radius;
-
                     Vector256<double> crVector = Vector256.Create(
                         cxMin + i * pixelWidth,
                         cxMin + (i + 1) * pixelWidth,
@@ -489,26 +468,20 @@ namespace MandleBroot_PAD
 
                         Vector256<double> radius = zr2 + zi2;
 
-                        // Compare magnitude squared against the limit.
-                        // True = pixel is still inside. False = pixel escaped.
                         Vector256<double> maskDouble = Vector256.LessThanOrEqual(radius, maxRadiusVector);
-                        // Active lanes become -1. Escaped lanes become 0.
                         Vector256<long> mask = maskDouble.AsInt64();
 
-                        // If all 4 lanes have escaped (the mask is all zeros)
                         if (mask == Vector256<long>.Zero)
                         {
                             break;
                         }
 
-                        // Branchless increment: subtracting -1 adds 1. Subtracting 0 does nothing.
                         iterations = iterations - mask;
 
                         ziVector = (doubleValueVector256 * zrVector * ziVector) + ciVector;
                         zrVector = zr2 - zi2 + crVector;
                     }
 
-                    // Extraímos a iteração real que CADA pixel levou antes de escapar
                     byte intensity0 = (iterations[0] == kMax) ? (byte)0 : (byte)255;
                     Color pixelColor0 = new(intensity0, intensity0, intensity0, (byte)255);
                     img[j * size.width + i] = pixelColor0;
@@ -526,18 +499,15 @@ namespace MandleBroot_PAD
                     img[j * size.width + i + 3] = pixelColor3;
                 }
 
-                // para arrays que não são perfeitamente divisiveis por 4 
                 for (int i = simdLimit; i < size.width; ++i)
                 {
-                    // double x = plane_center + (i + 0.5 - size.width/2) / (size.height/2) * plane_radius;
                     double x = cxMin + i * pixelWidth;
 
-                    // parameter c of  fc(z) = z^2 + c
                     double cr = x;
                     double ci = y;
 
                     double zr = 0, zi = 0;
-                    int k; // number of iterations
+                    int k;
                     for (k = 0; k < kMax; ++k)
                     {
 
@@ -553,8 +523,7 @@ namespace MandleBroot_PAD
                         double zr2 = zr * zr;
                         double zi2 = zi * zi;
 
-                        //z = z * z + c; // forward iteration of complex quadratic polynomial
-                        if (zr2 + zi2 > escapeRadiusEnd) // if abs(z) > ER
+                        if (zr2 + zi2 > escapeRadiusEnd)
                         {
                             break;
                         }
@@ -565,7 +534,7 @@ namespace MandleBroot_PAD
 
                     byte intensity = (k == kMax) ? (byte)0 : (byte)255;
                     Color pixelColor = new(intensity, intensity, intensity, (byte)255);
-                    img[j * size.width + i] = pixelColor; // compute and save color to array
+                    img[j * size.width + i] = pixelColor;
                 }
             });
 
@@ -573,9 +542,8 @@ namespace MandleBroot_PAD
 
         public void RunAVX2((int width, int height) size, CancellationToken token)
         {
-            const double aspectRatio = 1.0; // https://en.wikipedia.org/wiki/Aspect_ratio_(image)
-                                            // integer coordinate ( pixel or screen or image coordinate)
-                                            // double coordinate ( real world)
+            const double aspectRatio = 1.0;
+
             const double planeRadius = 2;
             Complex planeCenter = new(-0.5, 0.0);
 
@@ -600,13 +568,10 @@ namespace MandleBroot_PAD
                 if(token.IsCancellationRequested)
                     return;
 
-                //double y = (size.height/2 - (j + 0.5)) / (size.height/2) * plane_radius;
-                double y = cyMin + j * pixelHeight; /* mapping from screen to world; reverse Y  axis */
+                double y = cyMin + j * pixelHeight;
                 int simdLimit = size.width - (size.width % 4);
                 for (int i = 0; i < simdLimit; i += 4)
                 {
-                    // double x = plane_center + (i + 0.5 - size.width/2) / (size.height/2) * plane_radius;
-
                     Vector256<double> crVector = Vector256.Create(
                         cxMin + i * pixelWidth,
                         cxMin + (i + 1) * pixelWidth,
@@ -619,10 +584,9 @@ namespace MandleBroot_PAD
                     Vector256<double> zrVector = Vector256<double>.Zero;
                     Vector256<double> ziVector = Vector256<double>.Zero;
 
-
                     Vector256<long> iterations = Vector256<long>.Zero;
 
-                    int k; // number of iterations
+                    int k;
                     for (k = 0; k < kMax; ++k)
                     {
                         /*
@@ -638,20 +602,14 @@ namespace MandleBroot_PAD
 
                         Vector256<double> radius = zr2 + zi2;
 
-                        // Compare magnitude squared against the limit.
-                        // True = pixel is still inside. False = pixel escaped.
                         Vector256<double> maskDouble = Vector256.LessThanOrEqual(radius, maxRadiusVector);
-                        // Reinterpret the mask as 64-bit integers.
-                        // Active lanes become -1. Escaped lanes become 0.
                         Vector256<long> mask = maskDouble.AsInt64();
 
-                        // If all 4 lanes have escaped (the mask is entirely zeros), we can break early!
                         if (mask == Vector256<long>.Zero)
                         {
                             break;
                         }
 
-                        // Branchless increment: subtracting -1 adds 1. Subtracting 0 does nothing.
                         iterations = iterations - mask;
 
                         ziVector = (doubleValueVector256 * zrVector * ziVector) + ciVector;
@@ -675,18 +633,15 @@ namespace MandleBroot_PAD
                     img[j * size.width + i + 3] = pixelColor3;
                 }
 
-                // para arrays que não são perfeitamente divisiveis por 4 
                 for (int i = simdLimit; i < size.width; ++i)
                 {
-                    // double x = plane_center + (i + 0.5 - size.width/2) / (size.height/2) * plane_radius;
                     double x = cxMin + i * pixelWidth;
 
-                    // parameter c of  fc(z) = z^2 + c
                     double cr = x;
                     double ci = y;
 
                     double zr = 0, zi = 0;
-                    int k; // number of iterations
+                    int k;
                     for (k = 0; k < kMax; ++k)
                     {
 
@@ -702,8 +657,7 @@ namespace MandleBroot_PAD
                         double zr2 = zr * zr;
                         double zi2 = zi * zi;
 
-                        //z = z * z + c; // forward iteration of complex quadratic polynomial
-                        if (zr2 + zi2 > escapeRadiusEnd) // if abs(z) > ER
+                        if (zr2 + zi2 > escapeRadiusEnd)
                         {
                             break;
                         }
@@ -714,7 +668,7 @@ namespace MandleBroot_PAD
 
                     byte intensity = (k == kMax) ? (byte)0 : (byte)255;
                     Color pixelColor = new(intensity, intensity, intensity, (byte)255);
-                    img[j * size.width + i] = pixelColor; // compute and save color to array
+                    img[j * size.width + i] = pixelColor;
                 }
             }
 
