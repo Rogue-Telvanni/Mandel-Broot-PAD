@@ -1,20 +1,10 @@
 ﻿using BenchmarkDotNet.Running;
+using MandleBroot_PAD;
 using Raylib_cs;
 
 
-Raylib.InitWindow(800, 480, "Hello World");
-
-while (!Raylib.WindowShouldClose())
-{
-    Raylib.BeginDrawing();
-    Raylib.ClearBackground(Color.White);
-
-    Raylib.DrawText("Hello, world!", 12, 12, 20, Color.Black);
-
-    Raylib.EndDrawing();
-}
-
-Raylib.CloseWindow();
+Renderer renderer = new Renderer();
+renderer.Start();
 
 //var size = (1200, 1200);
 // Mandelbrot.RunThreadsSimplesOtimizado("treadOtimizada.pgm", size);
