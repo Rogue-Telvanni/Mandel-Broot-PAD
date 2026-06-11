@@ -33,7 +33,7 @@ namespace MandleBroot_PAD
         {
             img = new Color[size.width * size.height];
             Raylib.InitWindow(size.width, size.height, "Mandelbrot - Raylib");
-            Raylib.SetTargetFPS(60);
+            Raylib.SetTargetFPS(120);
 
             rayImage = new Image
             {
@@ -54,7 +54,6 @@ namespace MandleBroot_PAD
                 img[i] = Color.Black;
             }
 
-            AlterarMetodo(RenderMethod.BaseLine);
             while (!Raylib.WindowShouldClose())
             {
                 if (Raylib.IsKeyPressed(KeyboardKey.One)) AlterarMetodo(RenderMethod.BaseLine);
@@ -80,13 +79,16 @@ namespace MandleBroot_PAD
 
                 Raylib.DrawTexture(texture, 0, 0, Color.White);
 
-                if (!SelectedTask.IsCompleted)
+                if (SelectedTask is not null)
                 {
-                    Raylib.DrawText("Calculando... - " + algoritmoAtual, 12, 12, 20, Color.Red);
-                }
-                else
-                {
-                    Raylib.DrawText("Terminado - " + algoritmoAtual + " - Tempo De Execução: " + stopwatch.Elapsed.TotalSeconds, 12, 12, 20, Color.Green);
+                    if (!SelectedTask.IsCompleted)
+                    {
+                        Raylib.DrawText("Calculando... - " + algoritmoAtual, 12, 12, 20, Color.Red);
+                    }
+                    else
+                    {
+                        Raylib.DrawText("Terminado - " + algoritmoAtual + " - Tempo De Execução: " + stopwatch.Elapsed.TotalSeconds, 12, 12, 20, Color.Green);
+                    }
                 }
 
                 Raylib.EndDrawing();
